@@ -6,7 +6,6 @@ import {
   LOGIN_ERROR,
   LOGOUT_USER,
   LOGIN_TOKEN_USER,
-  COMPANY_ERROR_STORE,
   LOGIN_COMPANY,
   LOGIN_SUCCESS_COMPANY,
   LOGIN_ERROR_COMPANY,
@@ -86,13 +85,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-      };
-
-    case COMPANY_ERROR_STORE:
-      return {
-        ...state,
-        errorStore: action.payload,
-        loading: false,
       };
 
     case IS_SUPERV:
