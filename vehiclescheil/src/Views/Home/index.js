@@ -8,26 +8,36 @@ import "./home.css";
 import { Modal } from "react-bootstrap";
 import { Box } from "@mui/material";
 import StadisticsTable from "../../Components/StadisticsTable";
+import DataChart from "../../Components/DataChart";
 
 function Home() {
   const dispatch = useDispatch();
 
   const [vehiclesData, setVehiclesData] = useState([]);
-  // CONSTANTS
   const [stadisticsData, setStadisticsData] = useState([]);
+  const [filterStadisticsData, setFilterStadisticsData] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+
+
+
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [showModalStadistics, setShowModalStadistics] = useState(false);
+  const [showModalChart, setShowModalChart] = useState(false);
 
   //REDUX STATE
   const [user, setUser] = useState(useSelector(state => state.login.user));
- 
+
   const fetchVehiclesData = async () => {
     const response = await dispatch(getDataAction());
 
     if (response && response.data?.data) {
       setVehiclesData(response.data?.data);
       setStadisticsData(response.data?.desviacion_estandar_df);
+      const labels = response.data?.desviacion_estandar_df.map((item) => { return item.class });
+      setFilterStadisticsData(labels);
+      setSelectedFilter(labels[0]);
+
     } else {
       console.error("Error:", response.toString());
       throw new Error(response.toString());
@@ -43,6 +53,12 @@ function Home() {
     if (!data) {
       data = vehiclesData;
     }
+
+    const handleChangeFilter = e => {
+      const filter = e.target.value;
+      setSelectedFilter(filter);
+    }
+
     return (
       <div>
         <div className="action-table-topbar">
@@ -67,8 +83,17 @@ function Home() {
               >
                 Show Stadistics
               </button>
+              <select type="input" className="optionsChart"
+                onChange={handleChangeFilter}>
+                {filterStadisticsData.length > 0 ?
+                  filterStadisticsData.map((item, index) => (
+                    (<option key={index} value={item}
+                    >{item.charAt(0).toUpperCase() + item.slice(1)}</option>)
+                  ))
+                  : <option value="null">No Options</option>}
+              </select>
               <button
-                onClick={() => { }}
+                onClick={() => { setShowModalChart(true); }}
                 className={"activeFilter btn btn-secondary"}
               >
                 Show Chart
@@ -133,7 +158,7 @@ function Home() {
   const searchQuote = e => {
     if (e.keyCode === 13) {
       setSearch(e.target.value.trimEnd().trimStart());
-     
+
     }
   };
 
@@ -142,11 +167,9 @@ function Home() {
   const searchQuoteText = value => {
     if (value !== "") {
       setSearch(value.trimEnd().trimStart());
-    
+
     }
   };
-
-
 
   const handleEmpty = e => {
     if (e.target.value.length === 0) {
@@ -154,8 +177,20 @@ function Home() {
     }
   };
 
-  const handleModal=()=> {
+  const handleModal = () => {
     setShowModalStadistics(false);
+  };
+
+  const handleModalChart = () => {
+    setShowModalChart(false);
+  }
+  const filterDataToChart = () => {
+    if (selectedFilter !== null) {
+      // Remove the "class" property from each object in the data array
+      const filtered = stadisticsData.filter(data => data.class === selectedFilter);
+      const modifiedData = filtered.map(({ class: _, ...rest }) => rest);
+      return modifiedData;
+    }
   };
 
   return (
@@ -169,7 +204,7 @@ function Home() {
         )
         }
       </div>
-      {/*MODAL Alert Email*/}
+      {/*MODAL Stadistics*/}
       <Modal
         show={showModalStadistics}
         onClose={handleModal}
@@ -177,19 +212,37 @@ function Home() {
         centered
       >
         <Box className='modal-table'>
-        <div className='modal-table-header'>
+          <div className='modal-table-header'>
             <h2>Stadistics</h2>
             <img src={no} alt='close' onClick={handleModal} />
-        </div>
-        <div className='modal-table-options'>
-          <StadisticsTable 
-          handleModal={handleModal}
-          stadisticsData = {stadisticsData}
-          isLoading = {isLoading}
-          />
-        </div>
+          </div>
+          <div className='modal-table-options'>
+            <StadisticsTable
+              handleModal={handleModal}
+              stadisticsData={stadisticsData}
+              isLoading={isLoading}
+            />
+          </div>
         </Box>
-       
+      </Modal>
+      {/*MODAL Chart*/}
+      <Modal
+        show={showModalChart}
+        onClose={handleModalChart}
+        backdrop="static"
+        centered
+      >
+        <Box className='modal-chart-c'>
+          <div className='modal-table-header'>
+            <h2>Chart Statistics for {selectedFilter?.charAt(0)?.toUpperCase() + selectedFilter?.slice(1)}</h2>
+            <img className="icon-close" src={no} alt='close' onClick={handleModalChart} />
+          </div>
+          <div className='modal-chart'>
+            <DataChart
+              data={filterDataToChart()}
+            />
+          </div>
+        </Box>
       </Modal>
     </>
   );
