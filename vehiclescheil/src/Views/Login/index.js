@@ -77,6 +77,7 @@ function Login(props) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                backgroundColor: "Gray",
               }}
             >
               <img

@@ -19,6 +19,7 @@ function Home() {
   const [stadisticsData, setStadisticsData] = useState([]);
   const [filterStadisticsData, setFilterStadisticsData] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState(null);
+  const [selectedChart, setSelectedChart] = useState(null);
 
 
 
@@ -39,6 +40,7 @@ function Home() {
       const labels = response.data?.desviacion_estandar_df.map((item) => { return item.class });
       setFilterStadisticsData(labels);
       setSelectedFilter(labels[0]);
+      setSelectedChart("Bar");
 
     } else {
       console.error("Error:", response.toString());
@@ -59,6 +61,11 @@ function Home() {
     const handleChangeFilter = e => {
       const filter = e.target.value;
       setSelectedFilter(filter);
+    }
+
+    const handleChangeChartType = e => {
+      const filter = e.target.value;
+      setSelectedChart(filter);
     }
     const handleLogout = async () => {
       await dispatch(logoutUserAction());
@@ -85,7 +92,7 @@ function Home() {
               <div className="vehicles-search">
                 <input
                   ref={searchTextRef}
-                  onChange={()=>{}}
+                  onChange={() => { }}
                   onKeyDown={searchQuote}
                   type="text"
                   placeholder="Buscar"
@@ -100,7 +107,7 @@ function Home() {
               >
                 Show Stadistics
               </button>
-              <select type="input" className="optionsChart"
+              <select type="input" className="optionsChart" placeholder="Filter By"
                 onChange={handleChangeFilter}>
                 {filterStadisticsData.length > 0 ?
                   filterStadisticsData.map((item, index) => (
@@ -108,6 +115,13 @@ function Home() {
                     >{item.charAt(0).toUpperCase() + item.slice(1)}</option>)
                   ))
                   : <option value="null">No Options</option>}
+              </select>
+              <select type="input" className="optionsChart" placeholder="Chart Type"
+                onChange={handleChangeChartType}>
+                <option value="Bar">Bar</option>
+                <option value="Pie">Pie</option>
+                <option value="Lines">Lines</option>
+                <option value="Polar">Polar</option>
               </select>
               <button
                 onClick={() => { setShowModalChart(true); }}
@@ -175,9 +189,9 @@ function Home() {
   const searchQuote = e => {
     const searchValue = e.target.value.trimEnd().trimStart();
     if (searchValue !== "") {
-    const result = vehiclesData.filter(v => {return (v.class.includes(searchValue))});
-    setVehiclesData(result);
-    }else{
+      const result = vehiclesData.filter(v => { return (v.class.includes(searchValue)) });
+      setVehiclesData(result);
+    } else {
       setVehiclesData(vehiclesInitialData)
     }
   };
@@ -187,9 +201,9 @@ function Home() {
   const searchQuoteText = value => {
     if (value !== "") {
       const searchValue = value.trimEnd().trimStart();
-      const result = vehiclesData.filter(v => {return (v.class.includes(searchValue))});
+      const result = vehiclesData.filter(v => { return (v.class.includes(searchValue)) });
       setVehiclesData(result);
-    }else{
+    } else {
       setVehiclesData(vehiclesInitialData)
     }
   };
@@ -257,12 +271,14 @@ function Home() {
       >
         <Box className='modal-chart-c'>
           <div className='modal-table-header'>
-            <h2>Chart Statistics for {selectedFilter?.charAt(0)?.toUpperCase() + selectedFilter?.slice(1)}</h2>
+            <h2>{selectedChart} Chart Statistics for {selectedFilter?.charAt(0)?.toUpperCase() + selectedFilter?.slice(1)}</h2>
             <img className="icon-close" src={no} alt='close' onClick={handleModalChart} />
           </div>
           <div className='modal-chart'>
             <DataChart
               data={filterDataToChart()}
+              chartType={selectedChart}
+              selectedFilter={selectedFilter?.charAt(0)?.toUpperCase() + selectedFilter?.slice(1)}
             />
           </div>
         </Box>

@@ -35,7 +35,7 @@ body{
 
 .logo img{
     margin-top: 141px;
-    margin-bottom: 26px
+    margin-bottom: 50px
   }
 
 .content .bottom-text {
@@ -276,13 +276,13 @@ body{
 
 @media only screen and (max-height: 650px){
     .logo img{
-        width: 9%;
+        width: 40%;
     }
 }
 
 @media only screen and (max-width: 480px){
     .logo img{
-        width: 30%;
+        width: 40%;
     }
 
     
@@ -300,24 +300,24 @@ body{
 @media screen and (max-width: 768px){
 
     .logo img{
-        margin-top: 30px;
-        margin-bottom: 26px
+        margin-top: 141px;
+         margin-bottom: 50px
     } 
 }
 
 @media screen and (max-height: 850px){
 
     .logo img{
-        margin-top: 40px;
-        margin-bottom: 26px
+        margin-top: 141px;
+        margin-bottom: 50px
     } 
 }
 
 @media screen and (max-height: 650px){
 
     .logo img{
-        margin-top: 40px;
-        margin-bottom: 26px
+        margin-top: 141px;
+        margin-bottom: 50px
     } 
 }
 
