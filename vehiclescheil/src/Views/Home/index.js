@@ -2,17 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import searchIcon from "../../Assets/Images/search.svg";
 import no from "../../Assets/Images/no.svg";
-import { getDataAction } from "../../redux/actions/mainActions";
+import { getDataAction, logoutUserAction } from "../../redux/actions/mainActions";
 import MiniLoading from "../../Components/MiniLoading";
 import "./home.css";
 import { Modal } from "react-bootstrap";
 import { Box } from "@mui/material";
 import StadisticsTable from "../../Components/StadisticsTable";
 import DataChart from "../../Components/DataChart";
+import { useNavigate } from "react-router";
 
 function Home() {
   const dispatch = useDispatch();
 
+  const [vehiclesInitialData, setVehiclesInitialData] = useState([]);
   const [vehiclesData, setVehiclesData] = useState([]);
   const [stadisticsData, setStadisticsData] = useState([]);
   const [filterStadisticsData, setFilterStadisticsData] = useState([]);
@@ -26,13 +28,13 @@ function Home() {
   const [showModalChart, setShowModalChart] = useState(false);
 
   //REDUX STATE
-  const [user, setUser] = useState(useSelector(state => state.login.user));
-
+  const navigate = useNavigate();
   const fetchVehiclesData = async () => {
     const response = await dispatch(getDataAction());
 
     if (response && response.data?.data) {
       setVehiclesData(response.data?.data);
+      setVehiclesInitialData(response.data?.data);
       setStadisticsData(response.data?.desviacion_estandar_df);
       const labels = response.data?.desviacion_estandar_df.map((item) => { return item.class });
       setFilterStadisticsData(labels);
@@ -40,7 +42,7 @@ function Home() {
 
     } else {
       console.error("Error:", response.toString());
-      throw new Error(response.toString());
+      navigate("/login");
     }
     setIsLoading(false);
   };
@@ -58,9 +60,24 @@ function Home() {
       const filter = e.target.value;
       setSelectedFilter(filter);
     }
+    const handleLogout = async () => {
+      await dispatch(logoutUserAction());
+      window.localStorage.removeItem("token");
+      navigate("/login")
+    }
 
     return (
       <div>
+        <header className="App-header">
+          <div>
+            <button
+              onClick={handleLogout}
+              className={"btn btn-success"}
+            >
+              Logout
+            </button>
+          </div>
+        </header>
         <div className="action-table-topbar">
           <div className="action-table-left"></div>
           <div className="action-table-right">
@@ -68,7 +85,7 @@ function Home() {
               <div className="vehicles-search">
                 <input
                   ref={searchTextRef}
-                  onChange={handleEmpty}
+                  onChange={()=>{}}
                   onKeyDown={searchQuote}
                   type="text"
                   placeholder="Buscar"
@@ -156,9 +173,12 @@ function Home() {
   };
 
   const searchQuote = e => {
-    if (e.keyCode === 13) {
-      setSearch(e.target.value.trimEnd().trimStart());
-
+    const searchValue = e.target.value.trimEnd().trimStart();
+    if (searchValue !== "") {
+    const result = vehiclesData.filter(v => {return (v.class.includes(searchValue))});
+    setVehiclesData(result);
+    }else{
+      setVehiclesData(vehiclesInitialData)
     }
   };
 
@@ -166,8 +186,11 @@ function Home() {
 
   const searchQuoteText = value => {
     if (value !== "") {
-      setSearch(value.trimEnd().trimStart());
-
+      const searchValue = value.trimEnd().trimStart();
+      const result = vehiclesData.filter(v => {return (v.class.includes(searchValue))});
+      setVehiclesData(result);
+    }else{
+      setVehiclesData(vehiclesInitialData)
     }
   };
 

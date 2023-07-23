@@ -1,0 +1,340 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--main-color); 
+}
+
+.login-container{
+    background: linear-gradient(180deg, var(--secondary-color) 43%, var(--main-color) 43%);
+    height: 100vh;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* height: 100vh; */
+    align-items: center;
+    position: relative;
+}
+
+@media only screen and (max-width: 1300px) {
+  /*  .version{
+        position: relative !important;
+        margin-top: 50px;
+    }
+    .login-form{
+        padding: 15px 22px !important;
+      
+    }
+    .input-field {
+        margin-bottom: 7px !important;
+    }*/
+    
+  }
+
+.logo img{
+    margin-top: 141px;
+    margin-bottom: 26px
+  }
+
+.content .bottom-text {
+    line-height: 17px;
+    font-size: 1.2em;
+    letter-spacing: 0.24px;
+    color: var(--main-color);
+    font-weight: 300;
+    margin-bottom: 16px;
+}
+
+.center{
+    text-align: center;
+}
+
+.main-info{
+    min-width: 412px;
+    background: var(--main-color) 0% 0% no-repeat padding-box;
+    box-shadow: 0px -2px 2px var(--main-color)29;
+    border-radius: 15px;
+    position: relative;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    padding: 45px 22px;
+    padding-bottom: 0px !important;
+    padding-top: 30px !important;
+
+}
+
+.restore{
+    text-align: center;
+    margin-top: 10px;
+    letter-spacing: 0.28px;
+    font-size: 1.4em;
+}
+
+.restore:hover{
+    cursor: pointer;
+}
+
+.login-form .input-field {
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.tenant-validation{
+    font-size: 2.2em;
+    position: absolute;
+    top: 8px;
+    right: 15px;
+}
+
+.login-form .input-field input{
+    width: 100%;
+    border: 1px solid #E3E3E3;
+    border-radius: 5px;
+    padding: 12px 50px 12px 20px;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 1.5em;
+    letter-spacing: 0.3px;
+    font-weight: 300;
+    font-family: "Open Sans";
+    color: #1B202E;
+}
+
+.toggle-pass{
+    font-size: 2.2em;
+    position: absolute;
+    top: 8px;
+    right: 15px;
+}
+
+.btn-submit{
+    font-family : inherit;
+    padding: 9px;
+    margin-top: 10px;
+    font-size: 1.9em;
+    font-weight: 600;
+    color: #1B202E;
+    border-radius: 5px;
+    background-color: darkgray;
+    border:  none;
+}
+
+.hnl{
+    letter-spacing: 0.3px;
+    font-size: clamp(12px, 0.72vw, 15px);
+    font-weight: 400;
+    color: var(--secondary-color);
+   /* position: fixed;*/
+    display: block;
+    width: 100%;
+}
+
+.version{
+    letter-spacing: 0.3px;
+    font-size: clamp(12px,0.72vw ,15px);
+    font-weight: 400;
+    color: #7E7E7E;
+   /* position: fixed;*/
+    bottom: 70px;
+    display: block;
+    width: 100%;
+}
+
+.version-info-login{
+    margin-top: 50px;
+}
+
+.modal-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 408px;
+    height: 276px;
+    border-radius: 15px;
+    background-color: white;
+    outline: none;
+    box-shadow: 0px 3px 6px var(--shadow-color);
+}
+
+.restore-container{
+    padding: 45px 17.5px 42px 17px;
+}
+
+.restore-container .modal-header-restore{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 9px;
+}
+
+.modal-box .modal-header-restore {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 9px;
+}
+
+.close-modal{
+    font-size: 20px;
+}
+
+.close-modal:hover{
+    cursor: pointer;
+}
+
+.modal-box .modal-header-restore h2{
+    margin: 0;
+    font-size: 2.1em;
+    line-height: 28px;
+    letter-spacing: 0.21px;
+    color: #010101;
+    font-weight: 600;
+}
+
+.modal-box input{
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid #E3E3E3;
+    border-radius: 8px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.modal-box .modal-buttons{
+    margin-top: 25px;
+    display: flex;
+    padding: 0 9px;
+    justify-content: space-around;
+}
+
+.modal-box .modal-buttons .btn{
+    font-family: inherit;
+    outline: none;
+    background-color: var(--main-color);
+    border-radius: 30px;
+    font-size: 17px;
+    padding: 12px 47px;
+}
+
+.modal-box .modal-buttons .btn.modal-cancel{
+    border: 1px solid var(--secondary-color);
+}
+
+.modal-box .modal-buttons .btn.modal-continue{
+    background-color: var(--third-color);
+    border: none;
+}
+
+.confirmation-header{
+    text-align: right;
+    padding: 0 9px;
+    margin-bottom: 10px;
+}
+
+.confirmation-message{
+    text-align: center;
+    padding: 0 24px;
+}
+
+.confirmation-message img{
+    width: 15%;
+    margin-bottom: 9px;
+}
+
+.confirmation-message .confirmation-text{
+    font-size: 1.7em;
+    text-align: center;
+    line-height: 23px;
+    letter-spacing: 0.17px;
+    margin: 3px 0;
+}
+
+.error-message{
+    font-size: 1.3em;
+    text-align: center;
+    color: rgb(122, 14, 14);
+    margin-top: 12px;
+}
+
+.title{
+    font-size: 30em;
+}
+
+.restore-error-message{
+    font-size: 1.5em;
+    color: rgb(138, 8, 8);
+}
+
+@media only screen and (max-height: 650px){
+    .logo img{
+        width: 9%;
+    }
+}
+
+@media only screen and (max-width: 480px){
+    .logo img{
+        width: 30%;
+    }
+
+    
+    .main-info{
+        height: 100%;
+        max-width: 412px;
+        min-width: 0;
+    }
+
+    .login-form{
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 768px){
+
+    .logo img{
+        margin-top: 30px;
+        margin-bottom: 26px
+    } 
+}
+
+@media screen and (max-height: 850px){
+
+    .logo img{
+        margin-top: 40px;
+        margin-bottom: 26px
+    } 
+}
+
+@media screen and (max-height: 650px){
+
+    .logo img{
+        margin-top: 40px;
+        margin-bottom: 26px
+    } 
+}
+
+
+
+.spinner {
+    animation: spin infinite 2s linear;
+    font-size: 1.2em !important;
+    /*You can increase or decrease the timer (5s) to 
+     increase or decrease the speed of the spinner*/
+  }
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

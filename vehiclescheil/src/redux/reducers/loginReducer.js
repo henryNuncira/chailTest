@@ -6,11 +6,7 @@ import {
   LOGIN_ERROR,
   LOGOUT_USER,
   LOGIN_TOKEN_USER,
-  LOGIN_COMPANY,
-  LOGIN_SUCCESS_COMPANY,
-  LOGIN_ERROR_COMPANY,
   LOGIN_LOADING,
-  IS_SUPERV,
   RESET_LOGIN_USER
 } from "../types";
 
@@ -58,28 +54,7 @@ export default (state = initialState, action) => {
       };
     case LOGOUT_USER:
       return { ...initialState };
-    // login Company
-    case LOGIN_COMPANY:
-      return {
-        ...state,
-        error: null,
-        loading: true,
-      };
-    case LOGIN_SUCCESS_COMPANY:
-      return {
-        ...state,
-        checkCompany: action.payload,
-        error: null,
-        loading: false,
-      };
-
-    case LOGIN_ERROR_COMPANY:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-
+   
     // loading independiente
     case LOGIN_LOADING:
       return {
@@ -87,13 +62,9 @@ export default (state = initialState, action) => {
         loading: true,
       };
 
-    case IS_SUPERV:
-      return {
-        ...state,
-        isSuperv: action.payload,
-      };
-
     default:
-      return state;
+      return{
+        ...state
+      };
   }
 };
