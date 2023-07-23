@@ -12,8 +12,10 @@
 }
 
 .action-table-topbar {
+    margin-top: 20px;
     background-color: #f8f9fa;
     border: 1px solid var(--gray);
+    border-radius: 10px 10px 0px 0px;
     padding: 25px;
     display: flex;
     justify-content: space-between;
@@ -77,8 +79,8 @@
 .inv-search-icon {
     cursor: pointer;
     position: absolute;
-    right: 18px;
-    top: 13px;
+    right: 10px;
+    top: 8px;
     width: 2.5%;
 }
 .container-table-modal{

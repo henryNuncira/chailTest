@@ -51,11 +51,11 @@ function Login(props) {
   };
 
   // USER LOGIN REDUX
-  const login = (user, pass) => {
-    const logged= dispatch(loginUser(user, pass, props));
-    if(logged){
+  const login = async(user, pass) => {
+    const logged= await dispatch(loginUser(user, pass, props));
+    console.log("logged",logged);
+    if(logged===true){
       navigate("/home");
-      window.location.reload();
     }
   };
 
@@ -120,7 +120,7 @@ function Login(props) {
                     {cargando ? (
                       <FontAwesomeIcon icon={faSpinner} className="spinner" />
                     ) : (<>
-                      {"Continuar"}
+                      {"Continue"}
                       </>
                     )}
                   </button>

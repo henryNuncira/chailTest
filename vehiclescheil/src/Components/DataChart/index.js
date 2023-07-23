@@ -133,7 +133,7 @@ const DataChart = ({ data, chartType, selectedFilter}) => {
 
   return (
     <div className="container-chart">
-      <canvas id="myChart" className="chart-data" width="600" height="600" />
+      <canvas id="myChart" className="chart-data" width="550" height="500" />
     </div>
   );
 };

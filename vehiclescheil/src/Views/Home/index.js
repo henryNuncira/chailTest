@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import searchIcon from "../../Assets/Images/search.svg";
 import no from "../../Assets/Images/no.svg";
 import { getDataAction, logoutUserAction } from "../../redux/actions/mainActions";
@@ -22,8 +22,6 @@ function Home() {
   const [selectedChart, setSelectedChart] = useState(null);
 
 
-
-  const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [showModalStadistics, setShowModalStadistics] = useState(false);
   const [showModalChart, setShowModalChart] = useState(false);
@@ -53,38 +51,27 @@ function Home() {
     fetchVehiclesData();
   }, []);
 
+  const handleChangeFilter = e => {
+    const filter = e.target.value;
+    setSelectedFilter(filter);
+  }
+
+  const handleChangeChartType = e => {
+    const filter = e.target.value;
+    setSelectedChart(filter);
+  }
+  const handleLogout = async () => {
+    await dispatch(logoutUserAction());
+    window.localStorage.removeItem("token");
+    navigate("/login")
+  }
+
   const DataDisplayTable = ({ data }) => {
     if (!data) {
       data = vehiclesData;
     }
-
-    const handleChangeFilter = e => {
-      const filter = e.target.value;
-      setSelectedFilter(filter);
-    }
-
-    const handleChangeChartType = e => {
-      const filter = e.target.value;
-      setSelectedChart(filter);
-    }
-    const handleLogout = async () => {
-      await dispatch(logoutUserAction());
-      window.localStorage.removeItem("token");
-      navigate("/login")
-    }
-
     return (
       <div>
-        <header className="App-header">
-          <div>
-            <button
-              onClick={handleLogout}
-              className={"btn btn-success"}
-            >
-              Logout
-            </button>
-          </div>
-        </header>
         <div className="action-table-topbar">
           <div className="action-table-left"></div>
           <div className="action-table-right">
@@ -208,12 +195,6 @@ function Home() {
     }
   };
 
-  const handleEmpty = e => {
-    if (e.target.value.length === 0) {
-      setSearch("");
-    }
-  };
-
   const handleModal = () => {
     setShowModalStadistics(false);
   };
@@ -232,6 +213,16 @@ function Home() {
 
   return (
     <>
+      <header className="App-header">
+        <div>
+          <button
+            onClick={handleLogout}
+            className={"btn btn-success"}
+          >
+            Logout
+          </button>
+        </div>
+      </header>
       {/* <Navigation /> */}
       <div className="continer container-fluid">
         {isLoading ? (

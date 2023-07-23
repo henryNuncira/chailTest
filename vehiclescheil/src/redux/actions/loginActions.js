@@ -13,11 +13,6 @@ export const loginUser = (user, pass, props) => {
     type: LOGIN_USER,
   });
 
-  // SI EL USUARIO EXISTE
-  const loginSuccess = data => ({
-    type: LOGIN_SUCCESS,
-    payload: data,
-  });
 
   // SI HUBO ERROR
   const loginError = estado => ({
@@ -38,16 +33,17 @@ export const loginUser = (user, pass, props) => {
         };
         const response = await loginUserService(userCredentials);
         if (response.data?.status === "400" )
-          {dispatch(loginError("Este usuario no existe"));
+          {dispatch(loginError("This user doesn't exist, Verify your credentials"));
         return false}
         if ( response.data?.status === "404")
         {
-          dispatch(loginError("Credenciales Inválidas"));
+          dispatch(loginError("Invalid credentials"));
           return false;
         }
         
         if (response.data.token !== null) {
           window.localStorage.setItem("token", response.data.token);
+          window.localStorage.setItem("logged", true);
             await dispatch({ type: LOGIN_SUCCESS,
               payload: response.data,});
             return true;

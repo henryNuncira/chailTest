@@ -9,8 +9,7 @@ const mdlP = {
 };
 
 export const getDataService = async => {
-    const token = window.localStorage.getItem("token");
-    return axios_vehicles.get(mdlP.getDataURL,{headers: {...headers, Token: token}});
+    return axios_vehicles.get(mdlP.getDataURL);
 };
 
 export const loginUserService = async payload => {
