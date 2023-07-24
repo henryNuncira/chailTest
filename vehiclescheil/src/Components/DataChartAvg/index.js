@@ -1,35 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Chart from 'chart.js/auto';
 import "./dataChartAvg.css";
+import { colorsChart } from "../../Utils/constants";
 
 const DataChartAvg = ({ data, chartType }) => {
-  console.log(data);
 
 
   const filterValuesToChart = (selectedFilter) => {
     if (selectedFilter !== null) {
-      // Remove the "class" property from each object in the data array
       const filtered = data.map(data => data[selectedFilter] );
-      console.log("filtered", filtered);
-      //const modifiedData = filtered.map(({ class: _, ...rest }) => rest);
       return filtered;
     }
   };
 
   const labels = data.map(data => data.class);
   let selectOptions = Object.keys(data[0]);
-  console.log("selectOptions 1", selectOptions);
   // Remove the item "class" from the array
   selectOptions = selectOptions.filter(item => item !== "class");
   const [selectedFilter, setSelectedFilter] = useState(selectOptions[0])
   let values = filterValuesToChart(selectedFilter);
-  console.log("labels:", labels, "values:", values, "selectoptions", selectOptions);
 
-
-  // useEffect(() =>
-  // {
-
-  // },[selectedFilter])
   useEffect(() => {
     const ctx = document.getElementById("myChartAvg");
 
@@ -41,26 +31,7 @@ const DataChartAvg = ({ data, chartType }) => {
       existingChart.destroy();
     }
     // Create a new chart
-    const colors = [
-      "Red",
-      "mistyrose",
-      "Yellow",
-      "Green",
-      "lavender",
-      "Orange",
-      "Grey",
-      "Lime",
-      "Teal",
-      "Maroon",
-      "Navy",
-      "Blue",
-      "Silver",
-      "Gold",
-      "greenyellow",
-      "floralwhite",
-      "Magenta",
-      "Indigo",
-    ];
+    const colors = colorsChart;
     values = filterValuesToChart(selectedFilter);
     if (chartType === "Pie") {
       new Chart(ctx, {
@@ -173,7 +144,6 @@ const DataChartAvg = ({ data, chartType }) => {
       <div>
         <canvas id="myChartAvg" className="chart-data" width="550" height="500" />
       </div>
-
     </div>
   );
 };

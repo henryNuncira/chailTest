@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Chart from 'chart.js/auto';
 import "./dataChart.css";
+import { colorsChart } from "../../Utils/constants";
 
 const DataChart = ({ data, chartType, selectedFilter}) => {
   const labels = Object.keys(data[0]);
@@ -16,26 +17,7 @@ const DataChart = ({ data, chartType, selectedFilter}) => {
       existingChart.destroy();
     }
     // Create a new chart
-    const colors = [
-      "Red",
-      "mistyrose",
-      "Yellow",
-      "Green",
-      "lavender",
-      "Orange",
-      "Grey",
-      "Lime",
-      "Teal",
-      "Maroon",
-      "Navy",
-      "Blue",
-      "Silver",
-      "Gold",
-      "greenyellow",
-      "floralwhite",
-      "Magenta",
-      "Indigo",
-    ];
+    const colors = colorsChart;
     if (chartType === "Pie") {
       new Chart(ctx, {
         type: "pie",
