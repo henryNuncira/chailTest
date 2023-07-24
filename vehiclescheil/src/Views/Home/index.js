@@ -10,6 +10,7 @@ import { Box } from "@mui/material";
 import StadisticsTable from "../../Components/StadisticsTable";
 import DataChart from "../../Components/DataChart";
 import { useNavigate } from "react-router";
+import DataChartAvg from "../../Components/DataChartAvg";
 
 function Home() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function Home() {
   const [vehiclesInitialData, setVehiclesInitialData] = useState([]);
   const [vehiclesData, setVehiclesData] = useState([]);
   const [stadisticsData, setStadisticsData] = useState([]);
+  const [avgData, setAvgData] = useState([]);
   const [filterStadisticsData, setFilterStadisticsData] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [selectedChart, setSelectedChart] = useState(null);
@@ -25,6 +27,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [showModalStadistics, setShowModalStadistics] = useState(false);
   const [showModalChart, setShowModalChart] = useState(false);
+  const [showModalAvg, setShowModalAvg] = useState(false);
 
   //REDUX STATE
   const navigate = useNavigate();
@@ -35,6 +38,7 @@ function Home() {
       setVehiclesData(response.data?.data);
       setVehiclesInitialData(response.data?.data);
       setStadisticsData(response.data?.desviacion_estandar_df);
+      setAvgData(response.data?.promedio_df);
       const labels = response.data?.desviacion_estandar_df.map((item) => { return item.class });
       setFilterStadisticsData(labels);
       setSelectedFilter(labels[0]);
@@ -114,7 +118,13 @@ function Home() {
                 onClick={() => { setShowModalChart(true); }}
                 className={"activeFilter btn btn-secondary"}
               >
-                Show Chart
+                Show Chart Desv
+              </button>
+              <button
+                onClick={() => { setShowModalAvg(true); }}
+                className={"activeFilter btn btn-secondary"}
+              >
+                Show Chart Average
               </button>
             </div>
           </div>
@@ -202,6 +212,10 @@ function Home() {
   const handleModalChart = () => {
     setShowModalChart(false);
   }
+
+  const handleModalAvg = () => {
+    setShowModalAvg(false);
+  }
   const filterDataToChart = () => {
     if (selectedFilter !== null) {
       // Remove the "class" property from each object in the data array
@@ -248,6 +262,7 @@ function Home() {
             <StadisticsTable
               handleModal={handleModal}
               stadisticsData={stadisticsData}
+              avgData={avgData}
               isLoading={isLoading}
             />
           </div>
@@ -270,6 +285,27 @@ function Home() {
               data={filterDataToChart()}
               chartType={selectedChart}
               selectedFilter={selectedFilter?.charAt(0)?.toUpperCase() + selectedFilter?.slice(1)}
+            />
+          </div>
+        </Box>
+      </Modal>
+
+      {/*MODAL Chart AVG*/}
+      <Modal
+        show={showModalAvg}
+        onClose={handleModalAvg}
+        backdrop="static"
+        centered
+      >
+        <Box className='modal-chart-c'>
+          <div className='modal-table-header'>
+            <h2>{selectedChart} Chart Statistics AVG</h2>
+            <img className="icon-close" src={no} alt='close' onClick={handleModalAvg} />
+          </div>
+          <div className='modal-chart'>
+            <DataChartAvg
+              data={avgData}
+              chartType={selectedChart}
             />
           </div>
         </Box>

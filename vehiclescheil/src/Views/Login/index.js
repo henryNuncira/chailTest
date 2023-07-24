@@ -53,7 +53,6 @@ function Login(props) {
   // USER LOGIN REDUX
   const login = async(user, pass) => {
     const logged= await dispatch(loginUser(user, pass, props));
-    console.log("logged",logged);
     if(logged===true){
       navigate("/home");
     }

@@ -8,20 +8,13 @@ const axios_vehicles = axios.create({
 
 axios_vehicles.interceptors.request.use(config => {
    const token = localStorage.getItem("token");//store.getState().login.user?.token;
-   console.log("token in axios",token, localStorage.getItem("token"));
-  // const apim_key = store.getState().login?.checkCompany[0]?.APIMSubscriptionKey;
-  // if (token && apim_key) {
+   if (token ) {
     config.headers = {
       ...headers,
-      // "Api-Key":
-      //   process.env.REACT_APP_ENVIRONMENT === "QA"
-      //     ? process.env.REACT_APP_QA_API_KEY
-      //     : process.env.REACT_APP_PROD_API_KEY,
-      // "Ocp-Apim-Subscription-Key": apim_key,
       Token: `${token}`,
       Accept: "application/json",
     };
-  //}
+  }
   return config;
 });
 

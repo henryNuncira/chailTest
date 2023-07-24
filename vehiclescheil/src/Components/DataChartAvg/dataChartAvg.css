@@ -1,0 +1,29 @@
+.container-table-modal {
+    width: 100% !important;
+}
+
+#myChart,
+.chart-data {
+    width: 600px !important;
+    height: 500px !important;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.container-chart {
+    min-width: 400px !important;
+}
+
+.tittle-avg {
+    display: flex;
+    justify-content: center;
+}
+
+.select-filteroption {
+    margin-left: 30px;
+    border: 1px solid;
+    border-radius: 5px;
+}
