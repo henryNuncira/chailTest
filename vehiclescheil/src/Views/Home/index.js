@@ -11,6 +11,7 @@ import StadisticsTable from "../../Components/StadisticsTable";
 import DataChart from "../../Components/DataChart";
 import { useNavigate } from "react-router";
 import DataChartAvg from "../../Components/DataChartAvg";
+import { chartTypes } from "../../Utils/constants";
 
 function Home() {
   const dispatch = useDispatch();
@@ -83,18 +84,17 @@ function Home() {
               <div className="vehicles-search">
                 <input
                   ref={searchTextRef}
-                  onChange={() => { }}
-                  onKeyDown={searchQuote}
+                  onChange={searchData}
                   type="text"
-                  placeholder="Buscar"
+                  placeholder="Search vehicles by name..."
                 />
-                <img src={searchIcon} className="inv-search-icon" alt="search" onClick={() => searchQuoteText(searchTextRef.current.value)} />
+                <img src={searchIcon} className="inv-search-icon" alt="search" onClick={() => searchDataText(searchTextRef.current.value)} />
               </div>
             </div>
             <div className="action-table-buttons">
               <button
                 onClick={() => { setShowModalStadistics(true); }}
-                className={"activeFilter btn btn-primary"}
+                className={"activeFilter btn btn-info"}
               >
                 Show Stadistics
               </button>
@@ -107,13 +107,7 @@ function Home() {
                   ))
                   : <option value="null">No Options</option>}
               </select>
-              <select type="input" className="optionsChart" placeholder="Chart Type"
-                onChange={handleChangeChartType}>
-                <option value="Bar">Bar</option>
-                <option value="Pie">Pie</option>
-                <option value="Lines">Lines</option>
-                <option value="Polar">Polar</option>
-              </select>
+              {chartTypes(handleChangeChartType)}
               <button
                 onClick={() => { setShowModalChart(true); }}
                 className={"activeFilter btn btn-secondary"}
@@ -122,7 +116,7 @@ function Home() {
               </button>
               <button
                 onClick={() => { setShowModalAvg(true); }}
-                className={"activeFilter btn btn-secondary"}
+                className={"activeFilter btn btn-primary"}
               >
                 Show Chart Average
               </button>
@@ -183,8 +177,9 @@ function Home() {
     );
   };
 
-  const searchQuote = e => {
+  const searchData = e => {
     const searchValue = e.target.value.trimEnd().trimStart();
+    console.log(searchValue);
     if (searchValue !== "") {
       const result = vehiclesData.filter(v => { return (v.class.includes(searchValue)) });
       setVehiclesData(result);
@@ -195,7 +190,7 @@ function Home() {
 
   const searchTextRef = useRef(null);
 
-  const searchQuoteText = value => {
+  const searchDataText = value => {
     if (value !== "") {
       const searchValue = value.trimEnd().trimStart();
       const result = vehiclesData.filter(v => { return (v.class.includes(searchValue)) });
@@ -237,7 +232,6 @@ function Home() {
           </button>
         </div>
       </header>
-      {/* <Navigation /> */}
       <div className="continer container-fluid">
         {isLoading ? (
           <MiniLoading />

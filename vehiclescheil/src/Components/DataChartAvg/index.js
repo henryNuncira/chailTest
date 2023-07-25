@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Chart from 'chart.js/auto';
 import "./dataChartAvg.css";
-import { colorsChart } from "../../Utils/constants";
+import { chartTypes, colorsChart } from "../../Utils/constants";
 
 const DataChartAvg = ({ data, chartType }) => {
-
+  const [selectedChart, setSelectedChart] = useState(chartType);
 
   const filterValuesToChart = (selectedFilter) => {
     if (selectedFilter !== null) {
@@ -20,6 +20,10 @@ const DataChartAvg = ({ data, chartType }) => {
   const [selectedFilter, setSelectedFilter] = useState(selectOptions[0])
   let values = filterValuesToChart(selectedFilter);
 
+  const handleChangeChartType = e => {
+    const filter = e.target.value;
+    setSelectedChart(filter);
+  }
   useEffect(() => {
     const ctx = document.getElementById("myChartAvg");
 
@@ -33,7 +37,7 @@ const DataChartAvg = ({ data, chartType }) => {
     // Create a new chart
     const colors = colorsChart;
     values = filterValuesToChart(selectedFilter);
-    if (chartType === "Pie") {
+    if (selectedChart === "Pie") {
       new Chart(ctx, {
         type: "pie",
         data: {
@@ -49,7 +53,7 @@ const DataChartAvg = ({ data, chartType }) => {
           ]
         }
       });
-    } else if (chartType === "Bar") {
+    } else if (selectedChart === "Bar") {
       new Chart(ctx, {
         type: "bar", // Set the chart type to "bar"
         data: {
@@ -80,7 +84,7 @@ const DataChartAvg = ({ data, chartType }) => {
         }
       });
     }
-    else if (chartType === "Lines") {
+    else if (selectedChart === "Lines") {
       new Chart(ctx, {
         type: "line", // Set the chart type to "line"
         data: {
@@ -110,7 +114,7 @@ const DataChartAvg = ({ data, chartType }) => {
           }
         }
       });
-    } else if (chartType === "Polar") {
+    } else if (selectedChart === "Polar") {
       new Chart(ctx, {
         type: "polarArea", // Set the chart type to "polarArea"
         data: {
@@ -126,7 +130,7 @@ const DataChartAvg = ({ data, chartType }) => {
         }
       });
     }
-  }, [,selectedFilter]);
+  }, [,selectedFilter,selectedChart]);
 
   return (
     <div className="container-chart">
@@ -139,6 +143,8 @@ const DataChartAvg = ({ data, chartType }) => {
             </option>
           ))}
         </select>
+        <h6 style={{marginLeft:"30px"}}>Select Chart Type</h6>
+        {chartTypes(handleChangeChartType,selectedChart)}
       </div>
       <br />
       <div>
